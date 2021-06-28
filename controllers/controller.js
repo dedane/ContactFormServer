@@ -1,13 +1,13 @@
 let Contact = require("../models/contacts");
-let mailer = require("../../config/mailer");
+let mailer = require("../config/mailer");
 exports.contacts = async (req, res) => {
     try {
-        let user = new User({
+        let contact = new Contact({
             name: req.body.name,
             email: req.body.email,
             message: req.body.message
         })
-        let addedContact = await Contact.save();
+        let addedContact = await contact.save();
        if (addedUser) {
             mailer.welcomeMail(req.body.email, req.body.name)
         }

@@ -3,6 +3,8 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
 const mongoose =require('mongoose');
+
+const contactsRoutes = require('./routes/contacts');
 require('dotenv').config({ path: './.env'});
 
 
@@ -28,6 +30,9 @@ app.use((res, req, next) =>{
     }
     next();
 });
+
+
+app.use('/contacts',contactsRoutes);
 
 app.use((req, res, next)=>{
     const error = new Error('Not Found');

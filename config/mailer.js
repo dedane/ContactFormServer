@@ -1,10 +1,13 @@
+const nodemailer = require('nodemailer');
+const hbs = require("nodemailer-express-handlebars")
+
 var transporter = nodemailer.createTransport({
     host: 'smtp.zoho.eu',
     port: 465,
     secure: true, //ssl
     auth: {
             user:'pri@choosingme.co.ke',
-            pass:''
+            pass:'pri1234'
     }
 });
 
