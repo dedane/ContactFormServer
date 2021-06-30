@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const Contact = require('../models/contacts');
 
 
-router.post("/", async (req, res) => {
+router.post("/ContactUs", async (req, res) => {
     try {
         let contact = new Contact({
             _id: new mongoose.Types.ObjectId(),
