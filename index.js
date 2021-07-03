@@ -10,7 +10,8 @@ require('dotenv').config({ path: './.env'});
 
 mongoose.connect(`mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@realmcluster.fam4l.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`,{
     useNewUrlParser: true,
-    useUnifiedTopology: true
+    useUnifiedTopology: true,
+    useCreateIndex: true
 })
 mongoose.Promise =global.Promise;
 
