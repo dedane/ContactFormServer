@@ -9,8 +9,8 @@ var transporter = nodemailer.createTransport({
             type: 'OAuth2',
             user:'evanskeema@gmail.com',
             pass:'findout123',
-            clientId :'1003419225201-gub5mihaoe2oi1kg6n9qdemvrb20f302.apps.googleusercontent.com',
-            clientSecret: '5kxMVZ-syAherVlNXLspSpU2',
+            clientId :process.env.CLIENTID,
+            clientSecret: process.env.CLIENTSECRET,
             expires: 1484314697598
     },
     tls: {
