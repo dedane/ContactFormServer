@@ -14,18 +14,15 @@ router.post("/contactus", async(req, res) => {
         })
         let addedContact = contact.save()
       
-        .then(result => {
+        .then(() => {
             if (addedContact) {
                 mailer.welcomeMail(req.body.email, req.body.name)
                 console.log('welcome ABOARD');
             } 
             res.status(200).json({
-               // msg: "Welcome Onboard",
-               // data: addedContact
-               _id: result._id,
-               name: result.name,
-               email: result.email,
-               message: result.message,
+            msg: "Welcome Onboard",
+               data: addedContact
+               
             })
         })
         .catch(err => {
