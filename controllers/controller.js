@@ -9,7 +9,7 @@ exports.contacts = async (req, res) => {
         })
         let addedContact = await contact.save();
        if (addedUser) {
-            mailer.welcomeMail(req.body.email, req.body.name)
+            sendmail(req.body.email, req.body.name)
         }
 
         res.status(200).json({

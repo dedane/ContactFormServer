@@ -1,7 +1,7 @@
 const router = require("express").Router();
 const mongoose = require('mongoose');
 const Contacts = require('../models/contacts');
-let mailer = require("../config/mailer");
+let sendMail = require("../config/mailer");
 
 
 router.post("/contactus", async(req, res) => {
@@ -16,8 +16,8 @@ router.post("/contactus", async(req, res) => {
       
         .then(() => {
             if (addedContact) {
-                mailer.welcomeMail(req.body.email, req.body.name)
-                console.log('welcome ABOARD');
+                sendMail(req.body.email, req.body.name)
+                console.log('welcome ABOARD', addedContact);
             } 
             res.status(200).json({
             msg: "Welcome Onboard",
