@@ -2,8 +2,8 @@ const nodemailer = require('nodemailer');
 const hbs = require("nodemailer-express-handlebars")
 
 var transporter = nodemailer.createTransport({
-    host:  'poppro.zoho.com',
-    port: 995,
+    host:  'smtppro.zoho.com',
+    port: 465,
     secure: true,
     auth: {
             
