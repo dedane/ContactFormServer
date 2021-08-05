@@ -2,19 +2,19 @@ const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
-const mongoose =require('mongoose');
+//const mongoose =require('mongoose');
 
 const contacts = require('./routes/contacts');
 require('dotenv').config({ path: './.env'});
 
 
-mongoose.connect(`mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@realmcluster.fam4l.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`,{
+/*mongoose.connect(`mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@realmcluster.fam4l.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`,{
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useCreateIndex: true
 })
 mongoose.Promise =global.Promise;
-
+*/
 const app = express();
 app.use(morgan('dev'));
 app.use(cors());
