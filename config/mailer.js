@@ -8,7 +8,7 @@ var transporter = nodemailer.createTransport({
     auth: {
             
             user:'info@choosingme.co.ke',
-            pass: 'N@sieku123!' 
+            pass: 'Ru6nePA5Rypd' 
     }
 });
 
