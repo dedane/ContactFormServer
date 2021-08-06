@@ -7,8 +7,8 @@ var transporter = nodemailer.createTransport({
     secure: true,
     auth: {
             
-            user:'evanskimathi@alero.co.ke',
-            pass: 'M@kashima6#' 
+            user:'info@choosingme.co.ke',
+            pass: 'N@sieku123!' 
     }
 });
 
@@ -17,7 +17,7 @@ var transporter = nodemailer.createTransport({
 const sendMail = (name, email, message) => {
     let mailOptions = {
         from: email,
-        to: 'evanskimathi@alero.co.ke',
+        to: 'info@choosingme.co.ke',
         subject: name,
         text: message,
         
