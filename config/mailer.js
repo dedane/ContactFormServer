@@ -2,9 +2,10 @@ const nodemailer = require('nodemailer');
 const hbs = require("nodemailer-express-handlebars")
 
 var transporter = nodemailer.createTransport({
+    service: 'Zoho',
     host:  'smtppro.zoho.com',
     port: 465,
-    secure: true,
+    secure: false,
     auth: {
             
             user:'info@choosingme.co.ke',
@@ -15,7 +16,7 @@ var transporter = nodemailer.createTransport({
 
 
 const sendMail = (name, email, message) => {
-    let mailOptions = {
+    const mailOptions = {
         from: email,
         to: 'info@choosingme.co.ke',
         subject: name,
