@@ -1,21 +1,23 @@
 const router = require("express").Router();
-const mongoose = require('mongoose');
-const Contacts = require('../models/contacts');
+//const mongoose = require('mongoose');
+//const Contacts = require('../models/contacts');
 const nodemailer = require('nodemailer');
-const {google} = require('googleapis')
-const hbs = require("nodemailer-express-handlebars")
+const {google} = require('googleapis');
+const { response } = require("express");
 
-const CLIENT_ID = '777269441434-a35f9bpelh4u0tpo7aa8jd82ln4hqeef.apps.googleusercontent.com';
-const CLIENT_SECRET = 'ybwnWsmeV8rT7_hBcgi0N0-f';
-const REDIRECT_URI = 'https://developers.google.com/oauthplayground';
-const REFRESH_TOKEN = '1//04_jX4b9uoPt9CgYIARAAGAQSNwF-L9IrY40s0EgsttH3pHIc-asbM_5dPLidBgO1ozH73xdv6zTsgtggM4B7mBxX7tMVpzXzyY0';
 
-const oAuth2Client =  new google.auth.OAuth2(CLIENT_ID, CLIENT_SECRET, REDIRECT_URI)
-oAuth2Client.setCredentials({ refresh_token: REFRESH_TOKEN })
+
 
 
 router.post("/contactus", async(req, res) => {
-    async function sendMail(email,name,message) {
+    const CLIENT_ID = '777269441434-a35f9bpelh4u0tpo7aa8jd82ln4hqeef.apps.googleusercontent.com';
+    const CLIENT_SECRET = 'ybwnWsmeV8rT7_hBcgi0N0-f';
+    const REDIRECT_URI = 'https://developers.google.com/oauthplayground';
+    const REFRESH_TOKEN = '1//04_jX4b9uoPt9CgYIARAAGAQSNwF-L9IrY40s0EgsttH3pHIc-asbM_5dPLidBgO1ozH73xdv6zTsgtggM4B7mBxX7tMVpzXzyY0';
+
+    const oAuth2Client =  new google.auth.OAuth2(CLIENT_ID, CLIENT_SECRET, REDIRECT_URI)
+    oAuth2Client.setCredentials({ refresh_token: REFRESH_TOKEN })
+    async function sendMail() {
         try{
         const accessToken = await oAuth2Client.getAccessToken()
     
@@ -33,7 +35,7 @@ router.post("/contactus", async(req, res) => {
         }
     })
     var textBody = `FROM: ${req.body.name}; EMAIL: ${req.body.email}; MESSAGE: ${req.body.message}`;
-    var htmlBody = `<h2> Mail from Contact Form </h2><P>from: ${req.body.name} <a href='mailto: ${req.body.email}'>${req.body.email}</a></p>`
+    var htmlBody = `<h2> Mail from Contact Form </h2><P>from: ${req.body.name} <a href='mailto: ${req.body.email}'>${req.body.email}</a></p>`;
     const mailOptions = {
         from: 'evanskeema@gmail.com',
         to: 'Prinasieku@gmail.com',
@@ -42,14 +44,21 @@ router.post("/contactus", async(req, res) => {
         html: htmlBody
         
     }
-    const result = await transport.sendMail(mailOptions)
-    return result
+    transport.sendMail(mailOptions, (err,info) =>{
+         if(err) {
+             console.log(err);
+             response.json({ message: "an error occured"})
+         }
+        
+        })
+    
         }
+    
     catch(error) {
         return error
     }
     }
-
+    
 });
 /*
 router.post("/contactus", async (req, res) => {
