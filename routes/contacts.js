@@ -16,7 +16,7 @@ router.post("/contactus", async(req, res) => {
       
         .then(() => {
             if (addedContact) {
-                sendMail(req.body.email, req.body.name)
+                sendMail(addedContact)
                 console.log('welcome ABOARD', addedContact);
             } 
             res.status(200).json({
@@ -37,5 +37,20 @@ router.post("/contactus", async(req, res) => {
     }
 
 });
-
+/*
+router.post("/contactus", async (req, res) => {
+    try {
+      const { name, email, message } = req.body
+      const contact = {
+        from: ` <${email}>`,
+        message: `<${name}> <${message}>`
+      }
+      await sendMail(contact)
+  
+      res.redirect('/example#contact-success');
+    } catch (error) {
+      res.redirect('/example#contact-error')
+    }
+  })
+*/
 module.exports = router;
