@@ -1,39 +1,53 @@
 const router = require("express").Router();
 const mongoose = require('mongoose');
 const Contacts = require('../models/contacts');
-let sendMail = require("../config/mailer");
+const nodemailer = require('nodemailer');
+const {google} = require('googleapis')
+const hbs = require("nodemailer-express-handlebars")
+
+const CLIENT_ID = '777269441434-a35f9bpelh4u0tpo7aa8jd82ln4hqeef.apps.googleusercontent.com';
+const CLIENT_SECRET = 'ybwnWsmeV8rT7_hBcgi0N0-f';
+const REDIRECT_URI = 'https://developers.google.com/oauthplayground';
+const REFRESH_TOKEN = '1//04_jX4b9uoPt9CgYIARAAGAQSNwF-L9IrY40s0EgsttH3pHIc-asbM_5dPLidBgO1ozH73xdv6zTsgtggM4B7mBxX7tMVpzXzyY0';
+
+const oAuth2Client =  new google.auth.OAuth2(CLIENT_ID, CLIENT_SECRET, REDIRECT_URI)
+oAuth2Client.setCredentials({ refresh_token: REFRESH_TOKEN })
 
 
 router.post("/contactus", async(req, res) => {
-    try {
-        let contact = new Contacts({
-            _id: new mongoose.Types.ObjectId(),
-            name: req.body.name,
-            email: req.body.email,
-            message: req.body.message
-        })
-        let addedContact = contact.save()
-      
-        .then(() => {
-            if (addedContact) {
-                sendMail(addedContact)
-                console.log('welcome ABOARD', addedContact);
-            } 
-            res.status(200).json({
-            msg: "Welcome Onboard",
-               data: addedContact
-               
-            })
-        })
-        .catch(err => {
-            console.log(err);
-        })
-    }   
-    catch (err) {
-        console.log(err)
-        res.status(500).json({
-            error: err
-        })
+    async function sendMail(email,name,message) {
+        try{
+        const accessToken = await oAuth2Client.getAccessToken()
+    
+        const transport = nodemailer.createTransport({
+        service: 'Gmail',
+        port: 465,
+        secure: true,
+        auth: {
+            type: 'OAuth2',
+            user: 'prinasieku@gmail.com',
+            clientId: CLIENT_ID,
+            clientSecret: CLIENT_SECRET,
+            refreshToken: REFRESH_TOKEN,
+            accessToken: accessToken
+        }
+    })
+    var textBody = `FROM: ${req.body.name}; EMAIL: ${req.body.email}; MESSAGE: ${req.body.message}`;
+    var htmlBody = `<h2> Mail from Contact Form </h2><P>from: ${req.body.name} <a href='mailto: ${req.body.email}'>${req.body.email}</a></p>`
+    const mailOptions = {
+        from: 'evanskeema@gmail.com',
+        to: 'Prinasieku@gmail.com',
+        subject: 'Mail from contact Form',
+        text: textBody,
+        html: htmlBody
+        
+    }
+    const result = await transport.sendMail(mailOptions)
+    return result
+        }
+    catch(error) {
+        return error
+    }
     }
 
 });
